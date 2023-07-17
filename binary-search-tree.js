@@ -65,13 +65,39 @@ class BinarySearchTree {
    * return the node, if found; else undefined. Uses iteration. */
 
   find(val) {
+    let curNode= this.root;
+    if(val===curNode.val){
+      return curNode;
+    }
+    while (curNode){
+      if(val<curNode.val){
+        curNode=curNode.left;
+      }else if(val>curNode){
+        curNode=curNode.right;
+      }else{
+        return curNode.val===val;
+      }
+    }
+    
 
   }
 
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
-  findRecursively(val) {
+  findRecursively(val,current=this.root) {
+    if(!current) return undefined;
+    if(val<current.val){
+      if(current.left ===null) return undefined;
+      return this.findRecursively(val,current.left)
+      
+    }else if(val>current.val){
+      if(current.right===null) return undefined;
+      return this.findRecursively(val,current.right);
+    }
+
+    return current;
+
 
   }
 
@@ -79,6 +105,15 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsPreOrder() {
+    let data= [];
+    let current =data.this;
+    function traverse(node){
+      data.push(node.val); 
+      node.left && traverse(node.left);
+      node.right && traverse(node.right);
+    }
+    traverse(current);
+    return data;
 
   }
 
@@ -86,6 +121,15 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsInOrder() {
+    let data = [];
+    let current=this.root;
+    function traverse(node){
+      node.left && traverse(node.left);
+      data.push(node.val);
+      node.right && traverse(node.right);
+    }
+    traverse(current);
+    return data;
 
   }
 
@@ -93,6 +137,15 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsPostOrder() {
+    let data =[];
+    let current= this.root;
+    function traverse(node){
+      node.left&& traverse(node.left);
+      node.right&& traverse(node.right);
+      data.push(node.val);
+    }
+    traverse(current);
+    return data;
 
   }
 
@@ -100,7 +153,24 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   bfs() {
+    let node = this.root;
+    let queue = [];
+    let data = [];
 
+    queue.push(node);
+
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.val);
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+
+    return data;
   }
 
   /** Further Study!
